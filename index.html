@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sakila Client</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body>
+
+  <div class="container mt-3">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="d-grid gap-2">
+          <button id="btnLoadCustomer" class="btn btn-outline-danger btn-lg" type="button">
+            <i class="fa fa-download" aria-hidden="true"></i>
+            Load Customers
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="row mt-3 mb-3">
+      <div class="col-sm-12">
+        <div class="card shadow">
+          <h4 class="card-header d-flex justify-content-between">
+            Customer list from Sakila API
+            <a class="btn btn-primary" href="addCustomer.html" role="button">
+              <i class="fa fa-plus" aria-hidden="true"></i>
+              Add customer
+            </a>
+          </h4>
+          <div class="card-body">
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">store id</th>
+                  <th scope="col">first name</th>
+                  <th scope="col">last name</th>
+                  <th scope="col">email</th>
+                  <th scope="col">address id</th>
+                  <th scope="col">create date</th>
+                </tr>
+              </thead>
+              <tbody id="customer_container">
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+
+    <div class="container mt-3">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="d-grid gap-2">
+          <button id="btnLoadActor" class="btn btn-outline-danger btn-lg" type="button">
+            <i class="fa fa-download" aria-hidden="true"></i>
+            Load Actor
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="row mt-3 mb-3">
+      <div class="col-sm-12">
+        <div class="card shadow">
+          <h4 class="card-header d-flex justify-content-between">
+            Actor list from Sakila API
+            <a class="btn btn-primary" href="addActor.html" role="button">
+              <i class="fa fa-plus" aria-hidden="true"></i>
+              Add Actor
+            </a>
+          </h4>
+          <div class="card-body">
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">first_name</th>
+                  <th scope="col">first_name</th>
+                  <th scope="col">last_update</th>
+                </tr>
+              </thead>
+              <tbody id="actor_container">
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  <script>
+    $('#btnLoadCustomer').on('click', function () {
+      $.ajax({
+        url: 'http://localhost:3000/api/customers',
+        type: 'GET'
+      }).done(function (res) {
+        for (c of res) {
+          const tr = `<tr>
+                  <th scope="row">${c.customer_id}</th>
+                  <td>${c.store_id}</td>
+                  <td>${c.first_name}</td>
+                  <td>${c.last_name}</td>
+                  <td>${c.email}</td>
+                  <td>${c.address_id}</td>
+                  <td>${c.create_date}</td>
+                </tr>`;
+          $('#customer_container').append(tr);
+        }
+      })
+    })
+
+    $('#btnLoadActor').on('click', function () {
+      $.ajax({
+        url: 'http://localhost:3000/api/actors',
+        type: 'GET'
+      }).done(function (res) {
+        for (a of res) {
+          const tr = `<tr>
+                  <th scope="row">${a.actor_id}</th>
+                  <td>${a.first_name}</td>
+                  <td>${a.last_name}</td>
+                  <td>${a.last_update}</td>
+                </tr>`;
+          $('#actor_container').append(tr);
+        }
+      })
+    })
+  </script>
+</body>
+
+</html>
